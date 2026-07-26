@@ -1,9 +1,23 @@
 name: Deploy to Staging
 
+# DISABLED at VS-000 — see docs/architecture/adr/ADR-0008-DEPLOYMENT-WORKFLOWS.md
+#
+# Inherited from the Full Stack FastAPI Template. It targets self-hosted
+# runners labelled "staging" which do not exist for this project, and its
+# only guard was `github.repository_owner != 'fastapi'` — a condition that
+# PASSES on this fork, so it would have run on every push to master using
+# placeholder secrets (.env still contains three `changethis` values).
+#
+# The original trigger is preserved below. Re-enable at VS-019, and only
+# once a real deployment target exists and the secrets are replaced.
+#
+# on:
+#   push:
+#     branches:
+#       - master
+
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 permissions: {}
 
