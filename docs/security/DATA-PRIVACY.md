@@ -1,8 +1,50 @@
 # Data Privacy Policy
 
-**Status:** Open — this document states the problem, the constraints that
-already hold, and the decisions required. **It is not yet a finished
-policy, and the missing decisions block VS-004.**
+**Status:** Decided (P-1, the core storage question — 2026-07-26, by the
+human owner) / Open (P-4 – P-7 details, which follow from it and are
+settled in their owning slices). **VS-004 is no longer blocked by this
+document.**
+
+## 0. The decision (P-1) — hash/truncate at ingest
+
+**Decided 2026-07-26 by the human owner:** buyer personal data is
+**hashed or truncated at ingest and never stored in full.**
+
+Concretely:
+
+- During column mapping (VS-004), columns carrying personal data (§6) are
+  identified on the import profile.
+- At ingest, each such value is reduced to: a **one-way hash** (for
+  dedupe/idempotency purposes, since buyer identity can be part of a
+  natural key) plus a **masked display value** (e.g. `Ng*** V** A***`,
+  `09** *** 123`) for traceability display.
+- The full original value is not written to `import_source_row`, and —
+  because the value must exist nowhere — **the original uploaded file is
+  not retained verbatim**: it is either scrubbed of personal-data columns
+  before storage, or only the scrubbed representation is stored. "Download
+  original file" (VS-004) returns the scrubbed form, and says so.
+- Free-text note columns, which routinely smuggle addresses and phone
+  numbers, default to being treated as personal data and are masked
+  wholesale unless the import profile explicitly says otherwise.
+
+Consequences accepted with this choice:
+
+- A source row can never be re-read in full after ingest. If a column was
+  mis-mapped, the remedy is **re-import from the seller's own copy**, not
+  recovery from ours. This is the deliberate price of never becoming a
+  customer database.
+- P-2 and P-3 (retention windows for files and source rows) lose most of
+  their urgency: what is retained no longer contains personal data in
+  full. Retention windows are still to be set (storage hygiene, audit
+  needs) but they no longer gate VS-004.
+- P-4 and P-5 (who may view/export unmasked personal data) are largely
+  mooted: **there is nothing unmasked to view or export.** The masked
+  display value is visible wherever the source row is visible. The
+  `export.personal_data` audit event is retained for the masked-data case
+  and for any future policy change.
+- P-6 (deletion requests): a request can be honoured by deleting the hash
+  and masked value for the matching rows — feasible precisely because
+  nothing else exists. Procedure still to be written at VS-019.
 
 ## 1. Why this exists
 
@@ -60,33 +102,25 @@ These apply from VS-004 onward regardless of the open decisions below.
 7. **`.env` and secrets are never reproduced in documentation.** The
    VS-000 audit reported only variable names and placeholder status.
 
-## 4. Decisions required (blocking VS-004)
+## 4. Decision status
 
-| ID | Decision | Options | Blocks |
-|---|---|---|---|
-| P-1 | Are personal-data columns **dropped at ingest**, **stored but masked**, or **stored in full**? | Drop is safest and loses re-processing ability; mask-on-read is a middle ground; store-in-full maximises traceability and risk | VS-004 |
-| P-2 | How long is the **original uploaded file** retained? | e.g. 30 / 90 / 365 days / indefinitely | VS-004 |
-| P-3 | How long are **raw source rows** retained after successful processing? | Same options; may differ from P-2 | VS-004 |
-| P-4 | Who may **view** unmasked personal data in drill-down? | Owner only / Owner + Analyst / nobody | VS-015 |
-| P-5 | Who may **export** rows containing personal data? | Owner only / Owner + Analyst / nobody | VS-018 |
-| P-6 | How is a **deletion request** for one buyer handled? | Manual operational procedure vs. a built capability | VS-019 |
-| P-7 | Retention period for **audit events** containing redacted references | | VS-017 |
+| ID | Decision | Status |
+|---|---|---|
+| P-1 | Personal-data columns at ingest | **Decided 2026-07-26 (human owner): hash/truncate, never stored in full** — §0 |
+| P-2 | Retention of the original uploaded file | Open, no longer blocking — the stored form is scrubbed (§0). Set at VS-019 |
+| P-3 | Retention of raw source rows | Open, no longer blocking — rows contain no full PII. Set at VS-019 |
+| P-4 | Who may view unmasked personal data | Mooted by P-1 — nothing unmasked exists. Masked values follow normal source-row visibility |
+| P-5 | Who may export personal data | Mooted by P-1 for unmasked data. Masked-data exports still emit `export.personal_data` |
+| P-6 | Deletion request handling | Open — procedure written at VS-019; made feasible by P-1 |
+| P-7 | Audit-event retention | Open — set at VS-017 |
 
-**Recommendation for P-1 (owner to confirm):** identify personal-data
-columns during column mapping in VS-004 and store them **hashed or
-truncated** rather than verbatim, keeping a masked display value for
-traceability. This preserves "trace a number back to its source row"
-without the system becoming a customer database. Full-fidelity retention
-should be an explicit opt-in per organization, not the default.
+## 5. Standing obligations
 
-## 5. Until the decisions are made
-
-- VS-004 must **not** be implemented on the assumption that raw rows are
-  stored verbatim and forever. That is the current default only because
-  nothing has been decided, and it is the option with the most risk.
-- No purge job exists, so nothing expires today. That is a known gap, not
-  a design choice.
-- Any demo or portfolio screenshot must use synthetic data.
+- VS-004 implements P-1 at ingest — personal-data identification is part
+  of column mapping, and the hashing/masking behaviour has acceptance
+  criteria and tests.
+- No purge job exists yet; retention windows are set at VS-019.
+- Any demo or portfolio screenshot uses synthetic data.
 
 ## 6. Personal-data column identification
 

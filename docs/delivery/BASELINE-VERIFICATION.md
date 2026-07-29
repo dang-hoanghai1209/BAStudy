@@ -3,6 +3,13 @@
 **Status:** Verified for what was run; **incomplete** for what was not.
 **Date of audit:** 2026-07-26 (VS-000)
 
+> **Second attempt, 2026-07-26 (later the same day):** a full baseline run
+> was authorised and attempted. `docker info` still failed — diagnostics
+> confirmed no Docker Desktop process, no `docker*` named pipe, and
+> `com.docker.service` in state **Stopped** (context `desktop-linux`,
+> endpoint `npipe:////./pipe/dockerDesktopLinuxEngine`). Per instruction,
+> no partial baseline was attempted. §5 remains entirely unexecuted.
+
 This document records the verified command set for this repository, and —
 just as importantly — states plainly what has **not** been proven to work.
 

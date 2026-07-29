@@ -111,9 +111,14 @@ documented boundary. Full rules and the deferral of multi-currency:
 Timestamps are stored timezone-aware in UTC (the template already does this
 for `created_at`). Business dates that drive period assignment — order date,
 cost `effective_from`, settlement date — are governed by
-[`HISTORICAL-DATA-POLICY.md`](HISTORICAL-DATA-POLICY.md). The reporting
-timezone and fiscal-period definition are still **Open** and block VS-007
-and VS-014.
+[`HISTORICAL-DATA-POLICY.md`](HISTORICAL-DATA-POLICY.md).
+
+Reporting policy is decided
+([`adr/ADR-0011-TIME-AND-PERIOD-POLICY.md`](adr/ADR-0011-TIME-AND-PERIOD-POLICY.md)):
+reporting timezone `Asia/Ho_Chi_Minh`, stored as an organization-level
+setting; weeks start Monday (ISO 8601); fiscal year = calendar year; all
+period ranges half-open. UTC→local conversion for grouping happens in one
+shared place, never per query.
 
 ## 7. Request flow
 

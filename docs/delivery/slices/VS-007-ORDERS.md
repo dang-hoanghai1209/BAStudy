@@ -25,9 +25,9 @@ natural keys and an order lifecycle that survives re-import.
 | Natural key for an order and an order line, per marketplace | **Open (D-09)** |
 | Re-import containing a changed version of an existing order: update in place, or new version? | **Open (D-09)** |
 | Order status vocabulary, and which statuses count as revenue | **Open** |
-| Order date vs. payment date vs. ship date — which drives period assignment? | **Open (D-08)** |
+| Order date vs. payment date vs. ship date — **which date field** drives period assignment | **Open** — the timezone/boundary mechanics are now decided (below), the choice of driving field is not |
 | Can one order span multiple shops? | **Open** |
-| Timezone and period-boundary policy | **Open (D-08)** |
+| Timezone and period-boundary policy | **Decided 2026-07-26** — storage UTC; reporting `Asia/Ho_Chi_Minh` (org-level setting); weeks start Monday; fiscal = calendar year; half-open day boundaries ([ADR-0011](../../architecture/adr/ADR-0011-TIME-AND-PERIOD-POLICY.md)) |
 
 ## Entities involved
 
@@ -71,7 +71,7 @@ VS-004, VS-005. VS-003 for SKU resolution on lines.
 | Risk | Mitigation |
 |---|---|
 | Marketplace quirks force per-marketplace branching into a "canonical" model | Keep marketplace specifics in the import/mapping layer, not in `order` |
-| Period assignment decided by code rather than by rule | D-08 is a Definition-of-Ready gate |
+| Period boundary bugs at the UTC↔local edge | ADR-0011 boundary tests: `16:59:59Z` and `17:00:00Z` must land in different local days |
 | Order volume makes unpaginated queries unusable | Server-side pagination from the first implementation |
 
 ## CV evidence

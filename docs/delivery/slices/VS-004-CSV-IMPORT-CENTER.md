@@ -23,15 +23,21 @@ double-count revenue" — rather than as a technical detail.
 | Maximum file size | **Open** |
 | Supported encodings and delimiters; behaviour when detection is ambiguous | **Open** |
 | Raw source rows are immutable | Decided |
-| **Personal-data handling and retention** | **Open (D-13) — hard blocker**, see below |
+| Marketplaces in scope: Shopee + TikTok Shop; synthetic fixtures until real samples exist | **Decided 2026-07-26** — [ADR-0010](../../architecture/adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md) |
+| **Personal-data handling: hash/truncate at ingest, never stored in full** | **Decided 2026-07-26** — [`../../security/DATA-PRIVACY.md`](../../security/DATA-PRIVACY.md) §0 |
 
-### D-13 is a hard blocker for this slice
+### The P-1 decision shapes this slice
 
-Real marketplace exports contain buyer names, addresses and phone numbers.
-This slice decides whether that data is stored verbatim, masked, or dropped
-at ingest — and for how long. Building on the current default (store
-everything, forever, because nothing was decided) is the highest-risk
-option available. See [`../../security/DATA-PRIVACY.md`](../../security/DATA-PRIVACY.md) §4.
+Buyer PII is hashed/truncated at ingest (decided 2026-07-26). Concretely
+for VS-004: personal-data column identification is part of column mapping;
+each such value is stored as a one-way hash plus a masked display value;
+the uploaded file is **not retained verbatim** — "download original file"
+returns the scrubbed form and says so; free-text note columns default to
+masked. These behaviours have acceptance criteria and tests in this slice.
+
+A consequence to design for: a mis-mapped column cannot be recovered from
+our copy — the remedy is re-import from the seller's own file. Batch
+status and error reporting must make that path obvious.
 
 ## Entities involved
 
@@ -106,10 +112,10 @@ VS-001 (org/shop scoping, audit), VS-003 (channel SKUs land through import).
 
 | Risk | Mitigation |
 |---|---|
-| **D-13 unresolved** — building a customer-data store by accident | Hard gate on Definition of Ready |
 | Background processing loses a batch on restart | Explicit status; reprocess path; documented limitation |
 | Large files exhaust the 8 GB local target | File-size limit; streaming parse rather than loading whole files |
-| No real sample files (B-5) — built against invented shapes | Obtain at least one anonymised real export before starting |
+| **R-26** — synthetic fixtures diverge from real Shopee/TikTok Shop schemas | ADR-0010 conditions: fixtures labelled synthetic and schema-faithful; assumptions recorded here as assumptions; first real sample diffed against the fixture |
+| PII hashing implemented incompletely (a column missed, a note field stored raw) | Personal-data identification is an explicit column-mapping step with tests; free-text defaults to masked |
 | Slice sprawl: validation rules creep in from VS-005 | Exclusions below are binding |
 
 ## CV evidence

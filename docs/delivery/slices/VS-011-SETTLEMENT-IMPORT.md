@@ -3,7 +3,12 @@
 **Slice ID:** VS-011 · **Depends on:** VS-005 · **Status:** Not started · **Level:** Seeded
 
 > **Seeded spec.** Business analysis must be completed before Ready.
-> **Blocked in practice by B-5** — real settlement statements are needed.
+> Proceeds on **synthetic statement fixtures** per
+> [ADR-0010](../../architecture/adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md)
+> (decided 2026-07-26) — but this slice carries the **highest R-26
+> exposure** in the roadmap, because settlement formats are the least
+> publicly documented. Every fixture assumption must be recorded as an
+> assumption in this spec before coding.
 
 ## Business objective
 
@@ -67,9 +72,9 @@ VS-004, VS-005 (import pipeline), VS-001.
 
 | Risk | Mitigation |
 |---|---|
-| **B-5** — statement formats vary more than order exports and are harder to obtain; without real samples this slice is built against invented shapes | Obtain at least one real anonymised statement per marketplace before starting. This is a hard gate |
-| Statement grain misunderstood (per order? per transaction? per day?) | Determine from real samples, not assumption |
-| Personal data in statements | Same policy as VS-004 ([data privacy](../../security/DATA-PRIVACY.md)) |
+| **R-26 (was B-5)** — statement formats vary more than order exports; synthetic fixtures here are the roadmap's largest divergence exposure | ADR-0010 conditions apply strictly: schema-faithful fixtures, every format assumption recorded in this spec, first real statement diffed against the fixture and the delta recorded |
+| Statement grain misunderstood (per order? per transaction? per day?) | Record the assumed grain explicitly per marketplace; design `statement_line` so a grain correction is a mapping change, not a schema change |
+| Personal data in statements | Same P-1 policy as VS-004: hash/truncate at ingest ([data privacy](../../security/DATA-PRIVACY.md) §0) |
 
 ## CV evidence
 

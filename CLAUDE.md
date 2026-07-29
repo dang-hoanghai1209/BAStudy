@@ -63,6 +63,10 @@ business rule.
 | Vitest + Testing Library, added in its own commit (VS-000a) | [ADR-0007](docs/architecture/adr/ADR-0007-FRONTEND-TEST-RUNNER.md) |
 | Deploy workflows disabled until real infrastructure exists | [ADR-0008](docs/architecture/adr/ADR-0008-DEPLOYMENT-WORKFLOWS.md) |
 | Backend stays flat until VS-005a, then domain packages | [ADR-0009](docs/architecture/adr/ADR-0009-BACKEND-MODULE-STRUCTURE.md) |
+| Shopee + TikTok Shop MVP; synthetic fixtures, labelled, until real samples | [ADR-0010](docs/architecture/adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md) |
+| UTC storage; `Asia/Ho_Chi_Minh` reporting; Monday weeks; fiscal = calendar year | [ADR-0011](docs/architecture/adr/ADR-0011-TIME-AND-PERIOD-POLICY.md) |
+| Buyer PII hashed/truncated at ingest, never stored in full | [DATA-PRIVACY §0](docs/security/DATA-PRIVACY.md) |
+| Upstream kept as fetch-only remote | [ADR-0005](docs/architecture/adr/ADR-0005-UPSTREAM-TRACKING.md) |
 
 ## 4. Vertical-slice workflow
 

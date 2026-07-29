@@ -84,7 +84,7 @@ VS-007.
 |---|---|
 | Very likely to stall on unanswered Q1–Q3 | Treat all three as hard Definition-of-Ready gates |
 | Money rounding done in floats corrupts everything downstream | ADR-0003; explicit boundary tests |
-| Fee taxonomy invented from imagined data rather than real statements (B-5) | Obtain real anonymised exports first |
+| Fee taxonomy built from synthetic fixtures rather than real fee lines (R-26, per [ADR-0010](../../architecture/adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md)) | Model the taxonomy from Shopee/TikTok Shop published fee documentation, not imagination; record each label assumption; the unrecognised-label queue is the safety net when reality differs |
 | Rule versioning added later rather than designed in | Effective dating is in the schema from the first migration |
 
 ## CV evidence

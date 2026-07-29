@@ -15,9 +15,21 @@ confirm against `docs/delivery/TASK-BOARD.md` before treating as locked.
 - Basic dashboard
 - Import history
 
+## Marketplace scope
+
+**Decided 2026-07-26 (human owner):** the MVP targets **Shopee and TikTok
+Shop**; Lazada is deferred. Two channels is the minimum that proves the
+cross-channel SKU rollup the product exists for. No real sample exports
+are currently available — development proceeds on clearly-labelled
+synthetic fixtures per
+[ADR-0010](../architecture/adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md),
+with the divergence exposure tracked as risk R-26.
+
 ## Explicitly not in MVP
 
+- Lazada (and all other marketplaces beyond Shopee and TikTok Shop)
 - Marketplace API integration (CSV only, for now)
+- Multi-currency ([ADR-0003](../architecture/adr/ADR-0003-MONEY-AND-CURRENCY.md))
 - AI features of any kind
 - Mobile app
 - ERP integration

@@ -127,12 +127,17 @@ in depth, not a replacement for application checks.
 
 | Item | Blocks |
 |---|---|
-| D-08 — timezone and period-boundary policy for business dates | VS-007, VS-014 |
 | D-09 — natural key for order and order line; update vs. version on re-import | VS-004, VS-007 |
 | D-06 — is SKU remapping retroactive (does `channel_sku_mapping` need effective dating)? | VS-003 |
 | D-11 — bundles/kits, which would make mapping 1:N | VS-003 |
-| D-13 / P-1 — are personal-data columns stored verbatim, masked, or dropped? | VS-004 |
 | Whether RLS is adopted, and when | later |
+
+Resolved on 2026-07-26: **D-08** (reporting `Asia/Ho_Chi_Minh` as an
+org-level column on `organization`, Monday weeks, fiscal = calendar —
+[ADR-0011](adr/ADR-0011-TIME-AND-PERIOD-POLICY.md)) and **D-13/P-1**
+(personal-data columns hashed/truncated at ingest, never stored in full —
+`import_source_row` stores hash + masked display value, see
+[`../security/DATA-PRIVACY.md`](../security/DATA-PRIVACY.md) §0).
 
 ## 8. Maintenance rule
 

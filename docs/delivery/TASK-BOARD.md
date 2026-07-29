@@ -79,11 +79,15 @@ The answer determines whether the mapping table needs effective dating.
 
 ### VS-004 — CSV Import Center
 
-**Status:** Blocked ·
+**Status:** Blocked on VS-003 ·
 **Spec:** [`slices/VS-004-CSV-IMPORT-CENTER.md`](slices/VS-004-CSV-IMPORT-CENTER.md)
 
-Two hard gates: **B-6 / D-13** (personal-data handling and retention) and
-**B-5** (no real marketplace sample files). Also D-09, the idempotency key.
+Both former hard gates resolved 2026-07-26: **D-13** → PII hashed/truncated
+at ingest ([data privacy §0](../security/DATA-PRIVACY.md)); **B-5** →
+proceed on labelled synthetic Shopee/TikTok Shop fixtures
+([ADR-0010](../architecture/adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md)),
+exposure tracked as R-26. Remaining gate: **D-09** (idempotency key) plus
+the slice's own open rules.
 
 ### VS-005 — Import Validation and Error Handling
 

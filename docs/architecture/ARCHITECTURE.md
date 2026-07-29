@@ -30,6 +30,8 @@ both. The VS-000 audit split it, because conflating "what we have" with
 | [ADR-0007](adr/ADR-0007-FRONTEND-TEST-RUNNER.md) | Vitest + Testing Library, in its own commit |
 | [ADR-0008](adr/ADR-0008-DEPLOYMENT-WORKFLOWS.md) | Inherited deploy workflows disabled |
 | [ADR-0009](adr/ADR-0009-BACKEND-MODULE-STRUCTURE.md) | Flat until VS-005a, then domain packages |
+| [ADR-0010](adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md) | Shopee + TikTok Shop MVP; synthetic fixtures until real samples |
+| [ADR-0011](adr/ADR-0011-TIME-AND-PERIOD-POLICY.md) | UTC storage; `Asia/Ho_Chi_Minh` reporting; Monday weeks; fiscal = calendar |
 
 New decisions use [`adr/ADR-TEMPLATE.md`](adr/ADR-TEMPLATE.md) and are
 numbered sequentially. An ADR is superseded, never edited into a different

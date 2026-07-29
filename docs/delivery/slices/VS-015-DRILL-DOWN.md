@@ -21,8 +21,8 @@ is the evidence.
 | Question | Status |
 |---|---|
 | What lineage must be exposed, and to which roles | **Open** |
-| **P-4** — who may view unmasked personal data in a source row | **Open** — [data privacy](../../security/DATA-PRIVACY.md) |
-| Retention window for source rows (affects how far back drill-down works) | **Open (P-3)** |
+| P-4 — who may view unmasked personal data in a source row | **Mooted 2026-07-26** — PII is hashed/truncated at ingest, so nothing unmasked exists; the masked display value follows normal source-row visibility ([data privacy](../../security/DATA-PRIVACY.md) §0) |
+| Retention window for source rows (affects how far back drill-down works) | **Open (P-3)** — non-blocking; set at VS-019 |
 
 ## Entities involved
 

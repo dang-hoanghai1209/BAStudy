@@ -44,13 +44,14 @@ decided; the rest are open.
 | D-04 | Relationship between platform `is_superuser` and organization Owner | **Decided** — kept separate; a superuser gets no organization data access ([ADR-0006](../architecture/adr/ADR-0006-AUTHORIZATION-MODEL.md)) | — |
 | D-05 | Keep, repurpose or retire the template's `Item` | **Decided** — retire at VS-002, once catalog coverage replaces it, in its own commit ([ADR-0004](../architecture/adr/ADR-0004-TEMPLATE-INHERITANCE.md)) | — |
 | D-06 | Is SKU remapping retroactive to already-imported orders? | **Open** | VS-003 |
-| D-07 | Which marketplaces are in MVP scope, and can real sample exports be obtained? | **Open** | VS-004, VS-008, VS-011 |
-| D-08 | Timezone and period-boundary policy: storage UTC; reporting zone; week start; fiscal calendar | **Open** | VS-007, VS-014 |
+| D-07 | Which marketplaces are in MVP scope, and can real sample exports be obtained? | **Decided 2026-07-26 (human owner)** — Shopee + TikTok Shop for MVP, Lazada deferred; no real samples available, proceed on clearly-labelled synthetic fixtures with B-5 kept live as a risk ([ADR-0010](../architecture/adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md)) | — |
+| D-08 | Timezone and period-boundary policy | **Decided 2026-07-26 (human owner)** — storage UTC; reporting `Asia/Ho_Chi_Minh` as an org-level setting; weeks start Monday (ISO 8601); fiscal year = calendar year ([ADR-0011](../architecture/adr/ADR-0011-TIME-AND-PERIOD-POLICY.md)) | — |
 | D-09 | Order/line natural key per marketplace; update vs. version on re-import | **Open** | VS-004, VS-007 |
 | D-10 | Soft delete vs. hard delete for business records | **Decided** — deactivate or supersede; no `ON DELETE CASCADE` on business data ([historical-data policy](../architecture/HISTORICAL-DATA-POLICY.md) §6) | — |
 | D-11 | Are bundles/kits in scope (one channel SKU → several internal SKUs)? | **Open** | VS-003 |
 | D-12 | Recalculation trigger policy, and who may trigger it | **Open** | VS-009 |
-| D-13 | Personal-data policy for raw import data | **Open** — P-1 to P-7 in [`../security/DATA-PRIVACY.md`](../security/DATA-PRIVACY.md) | VS-004, VS-015, VS-018, VS-019 |
+| D-13 | Personal-data policy for raw import data | **Decided 2026-07-26 (human owner)** — buyer PII is hashed/truncated at ingest, never stored in full; details and consequences in [`../security/DATA-PRIVACY.md`](../security/DATA-PRIVACY.md) §0. Retention windows (P-2/P-3/P-7) remain open but non-blocking | — |
+| D-14 | Upstream template tracking: keep or cut | **Decided 2026-07-26 (human owner)** — keep as a fetch-only remote for security patches ([ADR-0005](../architecture/adr/ADR-0005-UPSTREAM-TRACKING.md)) | — |
 
 ## 3. Answered rules
 

@@ -13,8 +13,8 @@ from starting; a **risk** is managed while work proceeds.
 | B-2 | ~~Tenancy model undecided~~ | — | **Resolved** — [ADR-0002](../architecture/adr/ADR-0002-TENANCY-MODEL.md) |
 | B-3 | **No frontend component-test runner.** The Definition of Done requires loading/empty/error tests; the repository has no Vitest, Jest or Testing Library | VS-001 | **Decided** — [ADR-0007](../architecture/adr/ADR-0007-FRONTEND-TEST-RUNNER.md); land VS-000a before VS-001 implementation |
 | B-4 | ~~Money type and currency undecided~~ | — | **Resolved** — [ADR-0003](../architecture/adr/ADR-0003-MONEY-AND-CURRENCY.md) |
-| B-5 | **No real marketplace sample files.** Import, fee normalization and settlement parsing are all shaped by actual export formats. The Olist dataset has orders and payments but no fee/COGS ledger and no settlement statements, so it cannot substitute | VS-004, VS-008, VS-011 | Obtain at least one anonymised real export and one real settlement statement per in-scope marketplace |
-| B-6 | **Personal-data policy undecided (D-13).** Real exports contain buyer names, addresses and phone numbers; the current default is "store everything forever" only because nothing was decided | VS-004 | Answer P-1 through P-3 in [`../security/DATA-PRIVACY.md`](../security/DATA-PRIVACY.md) |
+| B-5 | ~~No real marketplace sample files~~ | — | **Downgraded to risk R-26 on 2026-07-26** — owner decided to proceed on labelled synthetic fixtures ([ADR-0010](../architecture/adr/ADR-0010-MARKETPLACE-SCOPE-AND-TEST-DATA.md)). No longer blocks slice start; the exposure is tracked below |
+| B-6 | ~~Personal-data policy undecided (D-13)~~ | — | **Resolved 2026-07-26** — hash/truncate at ingest, never stored in full ([`../security/DATA-PRIVACY.md`](../security/DATA-PRIVACY.md) §0) |
 | B-7 | **Open business questions** — two in VS-001, and the mandatory questions blocking VS-006, VS-008, VS-009, VS-012 | the named slices | Answer in [`../ba/08-BUSINESS-RULES.md`](../ba/08-BUSINESS-RULES.md) before the slice's Definition of Ready |
 
 ## Risks
@@ -46,6 +46,7 @@ from starting; a **risk** is managed while work proceeds.
 | R-23 | CSV formula injection in exports | Medium | Medium | Escaping and a malicious-cell test in VS-018 |
 | R-24 | Placeholder secrets (`changethis` × 3) reaching a real environment | High | Low | Config guard raises for non-local environments; VS-019 acceptance criterion |
 | R-25 | Interrupted background import lost on restart (no Celery) | Medium | Medium | Explicit batch status; reprocess path; documented limitation ([target architecture](../architecture/TARGET-ARCHITECTURE.md) §8) |
+| R-26 | **Synthetic-fixture divergence** (was blocker B-5). VS-004, VS-008 and VS-011 are built against our model of Shopee/TikTok Shop export schemas, not against real files. Rework is expected when real samples arrive, concentrated in VS-011 | Medium-High for VS-011, Medium for VS-004/VS-008 | High | ADR-0010 conditions: fixtures labelled synthetic, schema-faithful, assumptions recorded in slice specs; first real sample is diffed against the fixture and the delta recorded |
 
 ## Maintenance rule
 

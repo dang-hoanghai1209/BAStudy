@@ -19,7 +19,7 @@ visible rather than hidden behind a confident figure.
 
 | Question | Status |
 |---|---|
-| **D-08** — period definitions: calendar vs. fiscal, week start, reporting timezone | **Open — blocker** |
+| D-08 — period definitions, week start, reporting timezone | **Decided 2026-07-26** — `Asia/Ho_Chi_Minh`, Monday weeks, fiscal = calendar year ([ADR-0011](../../architecture/adr/ADR-0011-TIME-AND-PERIOD-POLICY.md)) |
 | Which order statuses are included in each KPI | **Open** |
 | How missing/unknown data is represented: zero, excluded, or flagged | **Open** |
 | Comparison-period semantics (vs. previous period, vs. same period last year) | **Open** |

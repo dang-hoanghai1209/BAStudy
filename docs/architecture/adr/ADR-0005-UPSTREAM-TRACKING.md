@@ -1,8 +1,11 @@
 # ADR-0005 — Tracking the upstream template via git, not Copier
 
-**Status:** Accepted (mechanism) / Open (whether to keep tracking at all — see §Open question)
+**Status:** Accepted — including the previously-open question: **keep
+tracking upstream as a fetch-only remote** (decided 2026-07-26 by the human
+owner)
 **Date:** 2026-07-26
-**Deciders:** Project owner (human), recorded at VS-000 approval
+**Deciders:** Project owner (human), recorded at VS-000 approval; the
+keep-vs-cut question confirmed by the human owner on 2026-07-26
 
 ## Context
 
@@ -66,21 +69,22 @@ been corrected to `https://github.com/dang-hoanghai1209/BAStudy.git`.
   ability to pull upstream security fixes and losing the provenance that
   explains why the codebase looks the way it does.
 
-## Open question requiring the owner's decision
+## The keep-vs-cut question — resolved
 
-Whether to keep tracking upstream at all is **not yet settled**. The
-trade-off:
+**Decided 2026-07-26 by the human owner: keep the upstream template as a
+fetch-only reference for future security patches.** The trade-off that was
+weighed:
 
-| Keep tracking | Cut history |
+| Keep tracking (chosen) | Cut history (rejected) |
 |---|---|
 | Can cherry-pick upstream security and dependency fixes | Must handle all dependency maintenance independently |
 | Provenance is visible and honest | `git log` reads as SellerMargin's own work from commit one |
 | 1392 unrelated commits dominate the history a reviewer sees | Clean, readable history for a portfolio reviewer |
 | Retirement work (ADR-0004) shows up as diffs against a known baseline | Retirement work becomes invisible |
 
-Recommendation: **keep tracking through VS-019**, then reconsider. The
-dependency-maintenance benefit is real while the project is still close to
-the template; it decays as divergence grows.
+The portfolio-readability cost is accepted and mitigated by documentation
+that makes the provenance explicit. Revisit at VS-019 remains sensible as
+divergence grows, but the default is now set: tracking continues.
 
 ## Consequences
 
