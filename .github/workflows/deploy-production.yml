@@ -1,9 +1,25 @@
 name: Deploy to Production
 
+# DISABLED at VS-000 — see docs/architecture/adr/ADR-0008-DEPLOYMENT-WORKFLOWS.md
+#
+# Inherited from the Full Stack FastAPI Template. It targets self-hosted
+# runners labelled "production" which do not exist for this project, and its
+# only guard was `github.repository_owner != 'fastapi'` — a condition that
+# PASSES on this fork, so publishing a release would have attempted a real
+# deployment using placeholder secrets (.env still contains three
+# `changethis` values).
+#
+# The original trigger is preserved below. Re-enable at VS-019, and only
+# once a real deployment target exists, the secrets are replaced, and a
+# rehearsed restore and rollback procedure are documented.
+#
+# on:
+#   release:
+#     types:
+#       - published
+
 on:
-  release:
-    types:
-      - published
+  workflow_dispatch:
 
 permissions: {}
 
